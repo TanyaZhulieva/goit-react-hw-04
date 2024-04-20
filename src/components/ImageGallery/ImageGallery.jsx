@@ -1,11 +1,15 @@
-import ImageCard from "../ImageCard/ImageCard.jsx"
+import ImageCard from "../ImageCard/ImageCard.jsx";
 
-export default function ImageGallery() {
+export default function ImageGallery({ items }) {
   return (
     <ul>
-      <li>
-        <ImageCard/>
-      </li>
+      {items.map((item) => {
+        return (
+          <li key={item.id}>
+            <ImageCard src={item.urls.small} alt={item.alt_description} />
+          </li>
+        );
+      })}
     </ul>
   );
 }

@@ -1,18 +1,26 @@
-import toast, { Toaster } from 'react-hot-toast';
 
-export default function SearchBar() {
-    const notify = () => toast('Введіть запит для пошуку');
+
+export default function SearchBar({onSearch}) {
+  const onSubmitHeader = (evt)=> {
+evt.preventDefault()
+const form = evt.target;
+const request = form.elements.input.value;
+if (request.trim() === "") {
+  "Please, enter your request!";
+  return;
+}
+onSearch(request.trim())
+form.reset()
+  }
 
   return <header>
-    <form>
+    <form onSubmit={onSubmitHeader}>
       <input
         type="text"
-        autocomplete="off"
-        autofocus
+        name="input"
         placeholder="Search images and photos"
       />
-      <button type="submit" onClick={notify}>Search</button>
+      <button type="submit">Search</button>
     </form>
-    <Toaster/>
   </header>;
 }
