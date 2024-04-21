@@ -14,7 +14,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgb(128, 128, 128, 0.5)",
+    backgroundColor: "rgb(58, 58, 58, 0.5)",
   },
   content: {
     top: "50%",
@@ -36,6 +36,7 @@ export default function App() {
   const [query, setQuery] = useState("");
 
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
@@ -56,7 +57,6 @@ export default function App() {
       try {
         setIsLoading(true);
         const data = await fetchImages(query, page);
-        console.log(data);
         setImages((prevImages) => {
           return [...prevImages, ...data];
         });
@@ -69,7 +69,8 @@ export default function App() {
     getImages();
   }, [query, page]);
 
-  function openModal() {
+  function openModal(image) {
+    setSelectedImage(image.urls.regular);
     setIsOpen(true);
   }
 
@@ -90,6 +91,7 @@ export default function App() {
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
       <ImageModal
+        imageUrl={selectedImage}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}

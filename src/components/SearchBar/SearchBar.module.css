@@ -7,3 +7,21 @@
    display: flex;
    justify-content: center;
 }
+
+.wrapper {
+    position: relative; 
+}
+
+.input {
+    padding-left: 24px;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    transform: translateY(-25%);
+    background-color: transparent;
+    border: none;
+    color: #7b8388;
+}

@@ -8,7 +8,7 @@ export default function ImageGallery({ items, onOpen }) {
         return (
           <li key={item.id} className={item}>
             <ImageCard 
-            src={item.urls.small} alt={item.alt_description} openModal={onOpen}/>
+            src={item.urls.small} alt={item.alt_description} openModal={()=>onOpen(item)}/>
           </li>
         );
       })}

@@ -2,16 +2,20 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-console.log(Modal.defaultStyles);
+// console.log(Modal.defaultStyles);
 
 export default function ImageModal({
-    isOpen, onAfterOpen, onRequestClose, style, contentLabel}) {
+    isOpen, onAfterOpen, onRequestClose, style, contentLabel, imageUrl}) {
     return <> 
     <Modal 
     isOpen={isOpen} 
     onAfterOpen={onAfterOpen} 
     onRequestClose={onRequestClose}
     style={style}
-    contentLabel={contentLabel}/>
+    contentLabel={contentLabel}>
+         <div>
+        <img src={imageUrl} alt="Image" />
+      </div>
+    </Modal>
     </>
 }
