@@ -1,4 +1,5 @@
 import css from "./ImageCard.module.css"
+
 export default function ImageCard({src, alt, openModal}) {
   return (
     <div className={css.thumb }>
