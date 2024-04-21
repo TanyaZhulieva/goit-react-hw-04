@@ -1,0 +1,9 @@
+.header {
+    background-color: #144b6f;
+    margin-bottom: 50px;
+}
+
+.form {
+   display: flex;
+   justify-content: center;
+}

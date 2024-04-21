@@ -3,15 +3,41 @@ import { fetchImages } from "../images-api.js";
 import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import SearchBar from "./SearchBar/SearchBar.jsx";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
+import ErrorMessage from "./ErrorMessage/ErrorMessage.jsx";
+import Loader from "./Loader/Loader.jsx";
+import ImageModal from "./ImageModal/ImageModal.jsx";
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgb(128, 128, 128, 0.5)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    background: "",
+  },
+};
 
 export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  const handleSearch = async (newQuery) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const handleSearch = (newQuery) => {
     setQuery(newQuery);
     setPage(1);
     setImages([]);
@@ -30,6 +56,7 @@ export default function App() {
       try {
         setIsLoading(true);
         const data = await fetchImages(query, page);
+        console.log(data);
         setImages((prevImages) => {
           return [...prevImages, ...data];
         });
@@ -42,16 +69,32 @@ export default function App() {
     getImages();
   }, [query, page]);
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       <SearchBar onSearch={handleSearch} />
-      {error && <b>Error!</b>}
+      {error && <ErrorMessage />}
 
-      {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && <ImageGallery items={images} onOpen={openModal} />}
 
-      {isLoading && <b>Please wait</b>}
+      {isLoading && <Loader />}
 
-      {images.length > 0 && !isLoading && <LoadMoreBtn onClick={handleLoadMore} />}
+      {images.length > 0 && !isLoading && (
+        <LoadMoreBtn onClick={handleLoadMore} />
+      )}
+      <ImageModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      />
     </>
   );
 }
